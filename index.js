@@ -3,7 +3,7 @@ const express = require('express')
 const axios = require('axios')
 
 const apiurl = "https://servicebus2.caixa.gov.br/portaldeloterias/api/megasena/"
-const port = 3000
+const port = process.env.PORT || 3001;
 
 const httpsAgent = new https.Agent({
   rejectUnauthorized: false,
@@ -68,9 +68,8 @@ function formata_qtde(qtd) {
   return q;
 }
 
-// app.listen(process.env.PORT || port);
-app.listen(process.env.PORT || port, () => {
-  console.log(`Example app listening on port ${port}`)
-});
+const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
-// module.exports = app;
+server.keepAliveTimeout = 120 * 1000;
+server.headersTimeout = 120 * 1000;
+
