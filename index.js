@@ -15,17 +15,18 @@ app.use(express.json()) // for parsing application/json bodies
 app.set('view engine', 'ejs')
 
 app.get('/:nr_conc?', async (req, res) => {
-  const jogos_ori = [
-    {"de":2400,"ate":3000,"jogo":["03","15","18","23","40","54"]},
-    {"de":2400,"ate":3000,"jogo":["01","02","12","29","46","51"]},
-    {"de":2400,"ate":3000,"jogo":["04","08","22","37","41","56"]},
-    {"de":2400,"ate":3000,"jogo":["02","04","07","14","25","33"]},
-    {"de":2400,"ate":3000,"jogo":["04","09","13","24","30","55"]}
+  var nr_conc = req.params.nr_conc;
+
+  let meusjogos = [
+    ["03","15","18","23","40","54"],
+    ["01","02","12","29","46","51"],
+    ["04","08","22","37","41","56"],
+    ["02","04","07","14","25","33"],
+    ["04","09","13","24","30","55"]
   ]
 
-  var jogos = JSON.stringify(jogos_ori);
-
   const endpoint = `${apiurl}${nr_conc}`
+  
   axios.get(endpoint, { httpsAgent })
     // Print data
     .then(response => {
