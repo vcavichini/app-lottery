@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Resultados Mega</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="card mt-3 fs-5 border-secondary">
+      <div class="card-header">
+        <h5 class="card-title fw-bolder text-center">Concurso: <%= concurso %> </h5>
+        <h5 class="card-subtitle fw-normal text-center"><%= dataApuracao %> </h5>
+        <h6 class="card-subtitle fw-lighter mt-1 text-center">Próximo sorteio : <%= dataProximoConcurso %></h6>
+        <h6 class="card-subtitle fw-lighter mt-1 text-center">Valor Estimado: <%= valorEstimadoProximoConcurso %></h6>
+      </div>
+
+      <div class="card-body">
+        <div class="card">
+          <div class="card-header fw-bold text-bg-light text-center">Nrs Sorteados</div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item text-center">
+              <% for(var i=0; i < lista_numeros.length; i++) { %>
+              <span class="badge text-bg-primary fs-6"><%= lista_numeros[i] %></span>
+              <% } %>
+            </li>
+          </ul>
+        </div>
+        <p></p>
+        <div class="card mt-4">
+          <div class="card-header fw-bold text-center">Resultado Apostas:</div>
+          <ul class="list-group list-group-flush">
+            <% for(var j=0; j < meusjogos.length; j++) { %>
+            <li class="list-group-item text-center">
+              <% for(var k=0; k < meusjogos[j].length; k++) { %>
+                <% if (lista_numeros.includes(meusjogos[j][k])) { %>
+                  <span class="badge bg-success fs-6"><%= meusjogos[j][k] %></span>
+                <% } else { %>
+                  <span class="badge fs-6 text-dark bg-secondary bg-opacity-10"><%= meusjogos[j][k] %></span>
+              <% } } %>
+            </li>
+            <% } %>
+          </ul>
+        </div>
+        <div class="container text-center mt-3">
+          <div class="row">
+            <div class="col">
+              <a href="/<%=concurso_anterior%>" class="btn btn-secondary" style="width:6rem"><%= concurso_anterior %></a>
+            </div>
+            <div class="col">
+              <a href="/<%=concurso_proximo%>" class="btn btn-secondary" style="width:6rem"><%= concurso_proximo %></a>
+            </div>
+          </div>
+        </div>
+        <p></p>
+        <div class="card border border-0">
+          <div class="container text-center fs-6 fw-light">
+            <div class="row justify-content-center fw-bold">
+              <div class="col-3 border rounded">#</div>
+              <div class="col-3 border rounded">Qtde</div>
+              <div class="col-6 border rounded">Prêmio</div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-3 border rounded">Sena</div>
+              <div class="col-3 border rounded"><%= rateio.sena %></div>
+              <div class="col-6 border rounded"><%= rateio.premioSena %></div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-3 border rounded">Quina</div>
+              <div class="col-3 border rounded"><%= rateio.quina %></div>
+              <div class="col-6 border rounded"><%= rateio.premioQuina %></div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-3 border rounded">Quadra</div>
+              <div class="col-3 border rounded"><%= rateio.quadra %></div>
+              <div class="col-6 border rounded"><%= rateio.premioQuadra %></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
