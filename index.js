@@ -1,4 +1,3 @@
-const https = require('https');
 const express = require('express');
 
 const apiurl = "https://servicebus2.caixa.gov.br/portaldeloterias/api/megasena/";
@@ -12,7 +11,7 @@ const meusjogos = [
   ["04","09","13","24","30","55"]
 ];
 
-const app = express()
+const app = express();
 app.set('views', 'views');
 app.set('view engine', 'ejs');
 app.use(express.json()); // for parsing application/json bodies
@@ -30,17 +29,17 @@ app.get('/:nr_conc?', async (req, res) => {
       listaDezenas: dt.listaDezenas,
       dataApuracao: dt.dataApuracao,
       dataProximoConcurso: dt.dataProximoConcurso,
-      valorEstimadoProximoConcurso: formata_moeda(dt.valorEstimadoProximoConcurso),
+      valorEstimadoProximoConcurso: format_curr(dt.valorEstimadoProximoConcurso),
       lista_numeros: dt.listaDezenas,
       concurso_anterior: dt.numeroConcursoAnterior,
       concurso_proximo: dt.numeroConcursoProximo,
       rateio: {
-        sena: formata_qtde(dt.listaRateioPremio[0].numeroDeGanhadores),
-        premioSena: formata_moeda(dt.listaRateioPremio[0].valorPremio),
-        quina: formata_qtde(dt.listaRateioPremio[1].numeroDeGanhadores),
-        premioQuina: formata_moeda(dt.listaRateioPremio[1].valorPremio),
-        quadra: formata_qtde(dt.listaRateioPremio[2].numeroDeGanhadores),
-        premioQuadra: formata_moeda(dt.listaRateioPremio[2].valorPremio),
+        sena: format_qty(dt.listaRateioPremio[0].numeroDeGanhadores),
+        premioSena: format_curr(dt.listaRateioPremio[0].valorPremio),
+        quina: format_qty(dt.listaRateioPremio[1].numeroDeGanhadores),
+        premioQuina: format_curr(dt.listaRateioPremio[1].valorPremio),
+        quadra: format_qty(dt.listaRateioPremio[2].numeroDeGanhadores),
+        premioQuadra: format_curr(dt.listaRateioPremio[2].valorPremio),
       },
       meusjogos: meusjogos,
     });
@@ -50,12 +49,12 @@ app.get('/:nr_conc?', async (req, res) => {
   }
 });
 
-function formata_moeda(valor) {
-  var dinheiro = valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-  return dinheiro;
+function format_curr(valor) {
+  var r = valor.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
+  return r;
 }
 
-function formata_qtde(qtd) {
+function format_qty(qtd) {
   var q = qtd.toLocaleString('pt-br');
   return q;
 }
