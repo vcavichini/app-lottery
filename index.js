@@ -1,6 +1,5 @@
 const https = require('https');
 const express = require('express');
-const axios = require('axios');
 
 const apiurl = "https://servicebus2.caixa.gov.br/portaldeloterias/api/megasena/";
 const port = process.env.PORT || 3001;
