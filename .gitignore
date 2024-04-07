@@ -2,5 +2,4 @@
 # Dependency directories
 node_modules/
 
-# My excludes
-package-lock.json
+
