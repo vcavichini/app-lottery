@@ -45,7 +45,7 @@ app.get('/:nr_conc?', async (req, res) => {
     });
   } catch(err) {
     res.render('error');
-    console.log('ERROR ignored');
+    console.log('ERROR', err);
   }
 });
 
