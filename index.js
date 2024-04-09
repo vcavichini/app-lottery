@@ -1,3 +1,4 @@
+import fetch from "node-fetch";
 const express = require('express');
 
 const apiurl = "https://servicebus2.caixa.gov.br/portaldeloterias/api/megasena/";
