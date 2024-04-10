@@ -1,5 +1,6 @@
-import fetch from "node-fetch";
-const express = require('express');
+import express from "express";
+import bodyParser from "body-parser";
+import axios from "axios";
 
 const apiurl = "https://servicebus2.caixa.gov.br/portaldeloterias/api/megasena/";
 const port = process.env.PORT || 3001;
@@ -13,19 +14,19 @@ const meusjogos = [
 ];
 
 const app = express();
-app.set('views', 'views');
-app.set('view engine', 'ejs');
-app.use(express.json()); // for parsing application/json bodies
-app.use(express.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/:nr_conc?', async (req, res) => {
-  let nr_conc = req.params.nr_conc ?? "";
-  const endpoint = `${apiurl}${nr_conc}`;
-
+app.get('/jogo/:id?', async (req, res) => {
   try {
-    dt = await getData(endpoint);
+    const nr_conc = req.params.id ?? "";
+    console.log(req.params);
+    const endpoint = `${apiurl}${nr_conc}`;
+    console.log(endpoint);
 
-    res.render('home', {
+    const response = await axios.get(endpoint);
+    const dt = response.data;
+    // console.log(dt);
+    res.render('home.ejs', {
       concurso: dt.numero,
       listaDezenas: dt.listaDezenas,
       dataApuracao: dt.dataApuracao,
@@ -44,9 +45,10 @@ app.get('/:nr_conc?', async (req, res) => {
       },
       meusjogos: meusjogos,
     });
-  } catch(err) {
-    res.render('error');
-    console.log('ERROR', err);
+  }
+  catch (error) {
+      console.log(`Error to fetch data\n ${error}`);
+      res.render('error.ejs');
   }
 });
 
@@ -60,11 +62,6 @@ function format_qty(qtd) {
   return q;
 }
 
-async function getData(endpoint) {
-  const response = await fetch(endpoint);
-  const jsonResponse = await response.json();
-  // console.log(jsonResponse);
-  return jsonResponse;
-} 
-
-const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}!`);
+});
