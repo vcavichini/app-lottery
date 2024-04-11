@@ -6,4 +6,7 @@ micros:
     engine: nodejs16
     primary: true
     dev: node index.js
+    public_routes:
+      - "/jogo/*""
+
     
