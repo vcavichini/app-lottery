@@ -2,7 +2,8 @@ import express from "express";
 import bodyParser from "body-parser";
 import axios from "axios";
 
-const apiurl = "https://servicebus2.caixa.gov.br/portaldeloterias/api/megasena/";
+// const apiurl = "https://servicebus2.caixa.gov.br/portaldeloterias/api/megasena/";
+const apiurl = "https://api.guidi.dev.br/loteria/megasena/";
 const port = process.env.PORT || 3001;
 
 const meusjogos = [
@@ -18,13 +19,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/jogo/:id?', async (req, res) => {
   try {
-    const nr_conc = req.params.id ?? "";
+    const nr_conc = req.params.id ?? "ultimo";
     console.log(req.params);
     const endpoint = `${apiurl}${nr_conc}`;
     console.log(endpoint);
 
     const response = await axios.get(endpoint);
-    const dt = response.data;
+    const dt = await response.data;
     // console.log(dt);
     res.render('home.ejs', {
       concurso: dt.numero,
