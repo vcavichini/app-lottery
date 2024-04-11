@@ -7,6 +7,6 @@ micros:
     primary: true
     dev: node index.js
     public_routes:
-      - "/jogo/*""
+      - "/jogo/*"
 
     
