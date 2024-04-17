@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import axios from "axios";
+import { isAfter, parse } from "date-fns";
 
 // const apiurl = "https://servicebus2.caixa.gov.br/portaldeloterias/api/megasena/";
 const apiurl = "https://api.guidi.dev.br/loteria/megasena/";
@@ -26,7 +27,14 @@ app.get('/jogo/:id?', async (req, res) => {
 
     const response = await axios.get(endpoint);
     const dt = await response.data;
-    // console.log(dt);
+    const hoje = new Date(new Date().toDateString());
+
+    // const hoje = new Date();
+    const prox = parse(dt.dataProximoConcurso, 'dd/MM/yyyy', new Date());
+    // console.log(` hoje: ${hoje.toString()}\n`, `prox: ${prox.toString()}`);
+    const mostraBotao = !isAfter(prox, hoje);
+    // console.log(`botao: ${mostraBotao}`);
+
     res.render('home.ejs', {
       concurso: dt.numero,
       listaDezenas: dt.listaDezenas,
@@ -45,6 +53,7 @@ app.get('/jogo/:id?', async (req, res) => {
         premioQuadra: format_curr(dt.listaRateioPremio[2].valorPremio),
       },
       meusjogos: meusjogos,
+      botaoProximo: mostraBotao
     });
   }
   catch (error) {

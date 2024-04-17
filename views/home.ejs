@@ -50,9 +50,11 @@
             <div class="col">
               <a href="/jogo/<%=concurso_anterior%>" class="btn btn-secondary" style="width:6rem"><%= concurso_anterior %></a>
             </div>
+            <% if (botaoProximo == true) { %>
             <div class="col">
-              <a href="/jogo/<%=concurso_proximo%>" class="btn btn-secondary" style="width:6rem"><%= concurso_proximo %></a>
+              <a href="/jogo/<%=concurso_proximo%>" class="btn btn-secondary" style="width:6rem" <%=botaoProximo%>><%= concurso_proximo %></a>
             </div>
+            <% } %>
           </div>
         </div>
         <p></p>
