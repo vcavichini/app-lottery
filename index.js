@@ -18,7 +18,7 @@ const meusjogos = [
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/jogo/:id?', async (req, res) => {
+app.get('/:id?', async (req, res) => {
   try {
     const nr_conc = req.params.id ?? "ultimo";
     console.log(req.params);
